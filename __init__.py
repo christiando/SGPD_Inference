@@ -1,18 +1,4 @@
-# SGPD_Inference
-
-Libary for GPSD (Sigmoidal Gaussian Process Density) inference.
-
-## Usage
-
-Minimal examples are given in examples.py. Relative imports should be
-substituted by absolute imports. The code was written with Python 3.6.
-
-## Contact
-
-For questions contact christian.donner(at)bccn-berlin.de
-
-## License
-
+"""
 Copyright (C) 2018, Christian Donner
 
 This file is part of SGPD_Inference.
@@ -29,3 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with SGPD_Inference.  If not, see <http://www.gnu.org/licenses/>.
+"""
+__author__ = 'Christian Donner'
+__email__ = 'christian.donner(at)bccn-berlin.de'
+__license__ = 'gpl-3.0'
