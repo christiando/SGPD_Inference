@@ -1,6 +1,6 @@
 # SGPD_Inference
 
-Libary for GPSD (Sigmoidal Gaussian Process Density) inference.
+Libary for SGPD (Sigmoidal Gaussian Process Density) inference.
 
 ## Usage
 
@@ -22,7 +22,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Foobar is distributed in the hope that it will be useful,
+SGPD_Inference is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
