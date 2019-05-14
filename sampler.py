@@ -25,6 +25,7 @@ from pypolyagamma import PyPolyaGamma, pgdrawvpar
 import time
 from .basemeasures import BaseMeasure
 from copy import copy
+from scipy.linalg import solve_triangular
 
 class GS_SGPD():
     """ Gibbs sampler for SGPD model.
@@ -103,7 +104,8 @@ class GS_SGPD():
         self.K = self.cov_func(self.X_all,self.X_all)
         self.K += self.noise * numpy.eye(self.K.shape[0])
         self.L = numpy.linalg.cholesky(self.K)
-        self.L_inv = numpy.linalg.solve(self.L, numpy.eye(self.L.shape[0]))
+        self.L_inv = solve_triangular(self.L, numpy.eye(self.L.shape[0]),
+                                      lower=True,check_finite=False)
         self.K_inv = self.L_inv.T.dot(self.L_inv)
         self.gp_mu = gp_mu
         self.pred_log_likelihood = []
@@ -167,7 +169,8 @@ class GS_SGPD():
         """
         Sigma_g_inv = numpy.diag(self.marks) + self.K_inv
         L_inv = numpy.linalg.cholesky(Sigma_g_inv)
-        L = numpy.linalg.solve(L_inv, numpy.eye(L_inv.shape[0]))
+        L = solve_triangular(L_inv, numpy.eye(L_inv.shape[0]), lower=True,
+                             check_finite=False)
         Sigma_g = L.T.dot(L)
         u = numpy.empty(self.N + self.M)
         u[:self.N] = .5
@@ -246,7 +249,8 @@ class GS_SGPD():
         self.K = self.cov_func(self.X_all, self.X_all)
         self.K += self.noise * numpy.eye(self.K.shape[0])
         self.L = numpy.linalg.cholesky(self.K)
-        self.L_inv = numpy.linalg.solve(self.L, numpy.eye(self.L.shape[0]))
+        self.L_inv = solve_triangular(self.L, numpy.eye(self.L.shape[0]),
+                         lower=True, check_finite=False)
         self.K_inv = self.L_inv.T.dot(self.L_inv)
 
     def sample_from_cond_GP(self, xprime):
@@ -437,7 +441,8 @@ class GS_SGPD():
         K = self.cov_func(self.X_all, self.X_all, cov_params=[theta1, theta2])
         K += self.noise * numpy.eye(K.shape[0])
         L = numpy.linalg.cholesky(K)
-        L_inv = numpy.linalg.solve(L, numpy.eye(L.shape[0]))
+        L_inv = solve_triangular(L, numpy.eye(L.shape[0]), lower=True,
+                                 check_finite=False)
         K_inv = L_inv.T.dot(L_inv)
         logp_new = self.compute_kernel_param_prop(K_inv, L)
         rand_num_accept = numpy.random.rand(1)

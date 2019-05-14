@@ -26,6 +26,7 @@ from scipy.integrate import quadrature
 from .basemeasures import BaseMeasure
 import time
 from sklearn.cluster import KMeans
+from scipy.linalg import solve_triangular
 
 class VI_SGPD():
     """ Variational inference for SGPD model.
@@ -81,7 +82,8 @@ class VI_SGPD():
         self.Ks = self.cov_func(self.induced_points, self.induced_points)
         self.Ks += self.noise * numpy.eye(self.Ks.shape[0])
         L = numpy.linalg.cholesky(self.Ks)
-        L_inv = numpy.linalg.solve(L, numpy.eye(L.shape[0]))
+        L_inv = solve_triangular(L, numpy.eye(L.shape[0]), lower=True,
+                                 check_finite=False)
         self.Ks_inv = L_inv.T.dot(L_inv)
         self.logdet_Ks = 2. * numpy.sum(numpy.log(L.diagonal()))
         self.place_integration_points()
@@ -250,7 +252,8 @@ class VI_SGPD():
                 / self.num_integration_points
         self.Sigma_g_s_inv =  kAk + self.Ks_inv
         L_inv = numpy.linalg.cholesky(self.Sigma_g_s_inv)
-        L = numpy.linalg.solve(L_inv, numpy.eye(L_inv.shape[0]))
+        L = solve_triangular(L_inv, numpy.eye(L_inv.shape[0]), lower=True,
+                             check_finite=False)
         self.Sigma_g_s = L.T.dot(L)
         self.logdet_Sigma_g_s = 2*numpy.sum(numpy.log(L.diagonal()))
         b_int_points = (-.5 - (self.gp_mu -
@@ -339,7 +342,8 @@ class VI_SGPD():
         self.Ks = self.cov_func(self.induced_points, self.induced_points)
         self.Ks += self.noise * numpy.eye(self.Ks.shape[0])
         L = numpy.linalg.cholesky(self.Ks)
-        L_inv = numpy.linalg.solve(L, numpy.eye(L.shape[0]))
+        L_inv = solve_triangular(L, numpy.eye(L.shape[0]), lower=True,
+                                 check_finite=False)
         self.Ks_inv = L_inv.T.dot(L_inv)
         self.logdet_Ks = 2. * numpy.sum(numpy.log(L.diagonal()))
         self.kappa_X = self.Ks_inv.dot(self.ks_X)
