@@ -82,6 +82,7 @@ def example_1D():
     ax.set_xlabel('$x$')
     ax.set_ylabel('Density $\\rho(x)$')
     ax.legend(frameon=0)
+    fig.show()
 
 def example_2D():
 
@@ -156,3 +157,4 @@ def example_2D():
     ax3.set_title('Gibbs')
     ax3.set_yticks([])
     ax3.set_xticks([])
+    fig.show()
