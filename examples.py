@@ -88,7 +88,7 @@ def example_2D():
 
     D = 2
     numpy.random.seed(2)
-    grid_points = 70
+    grid_points = 50
     num_samples = 200
     S_borders = numpy.array([[-3., 4.],
                              [-4., 4.5]])
