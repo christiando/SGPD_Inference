@@ -467,6 +467,7 @@ class GS_SGPD():
         :rtype: float
         """
 
-        logp = -.5*self.g.T.dot(K_inv.dot(self.g)) - \
+        logp = -.5*(self.g.T - self.gp_mu).dot(
+            K_inv.dot(self.g - self.gp_mu)) - \
             numpy.sum(numpy.log(L.diagonal()))
         return logp
